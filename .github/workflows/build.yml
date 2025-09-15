@@ -1,0 +1,33 @@
+name: Build and Release
+
+on:
+  push:
+    branches: [ "main" ]  # mainにpushされたら毎回リリース
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ github.run_number }}
+          name: "Build #${{ github.run_number }}"
+          draft: false
+          prerelease: true
+          files: ./target/your-app.jar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
