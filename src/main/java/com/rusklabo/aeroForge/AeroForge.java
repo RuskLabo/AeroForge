@@ -7,7 +7,11 @@ public final class AeroForge extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
+        // イベントリスナーを登録
+        getServer().getPluginManager().registerEvents(new AirshipDetector(this), this);
 
+        // 設定ファイルを保存
+        saveDefaultConfig();
     }
 
     @Override
