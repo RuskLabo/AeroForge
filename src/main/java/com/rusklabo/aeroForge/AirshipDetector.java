@@ -20,9 +20,11 @@ public class AirshipDetector implements Listener {
 
     private final AeroForge plugin;
     private final int MAX_BLOCK_COUNT;
+    private final ShipManager shipManager;
 
     public AirshipDetector(AeroForge plugin) {
         this.plugin = plugin;
+        this.shipManager = new ShipManager(); // ShipManagerのインスタンス化
         this.MAX_BLOCK_COUNT = plugin.getConfig().getInt("max-block-count", 500);
     }
 
@@ -101,8 +103,10 @@ public class AirshipDetector implements Listener {
 
         player.sendMessage("§a乗り物を検出しました！ブロック数: " + shipBlocks.size());
 
-        // Shipオブジェクトを生成し、リストに保存するなど
-        // ここから移動ロジックに繋がる
-        // new Ship(shipBlocks, player);
+        // Shipオブジェクトを生成し、ShipManagerに登録
+        Ship newShip = new Ship(player, shipBlocks, startBlock.getLocation());
+        shipManager.registerShip(newShip);
+
+        player.sendMessage("§a乗り物が起動しました！");
     }
 }
