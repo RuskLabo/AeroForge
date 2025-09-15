@@ -28,6 +28,6 @@ jobs:
           name: "Build #${{ github.run_number }}"
           draft: false
           prerelease: true
-          files: ./target/your-app.jar
+          files: ./target/AeroForge-1.0-SNAPSHOT.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
